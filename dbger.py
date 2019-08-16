@@ -43,8 +43,25 @@ class DbgHook(DBG_Hooks):
 					print "sw_0.jiami_in:%s" % self.get_string(idc.GetRegValue('R2'))
 				if name=="sw_1":
 					print "sw_1.jiami_in:%s" % self.get_string(idc.GetRegValue('R2'))
-						
-			
+				if name=="rand3":
+					print "rand3:%x" % idc.GetRegValue('R2')
+				if name=="rand2":
+					print "rand2:%x" % idc.GetRegValue('R6')
+				if name=="rand2_set":
+					print "rand2_set :%x" % idc.GetRegValue('R1')
+					idc.SetRegValue(0x0,'R1')
+				if name=="rand3_set":
+					print "rand3_set :%x" % idc.GetRegValue('R1')
+					idc.SetRegValue(0x2,'R1')
+				if name=="time1":
+					print "time1 :%x" % idc.GetRegValue('R0')
+					idc.SetRegValue(0x5D562053,'R0')
+				if name=="time2":
+					print "time2 :%x" % idc.GetRegValue('R0')
+					idc.SetRegValue(0x000C7446,'R0')
+				if name=="strlen":
+					print "strlen :%x" % idc.GetRegValue('R0')
+					#idc.SetRegValue(0x000C7446,'R0')
 		return 0
 		
 	def dbg_suspend_process(self):
@@ -105,7 +122,42 @@ class DbgHook(DBG_Hooks):
 			print "bp : %08X,%08X"% (addr,offset)
 			idc.AddBpt(addr)
 			self.bpList["sw_0"]=addr
-			
+			offset=0x00012C76
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["rand3"]=addr
+			offset=0x00012C30
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["rand2"]=addr
+			offset=0x00012FF2
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["rand2_set"]=addr
+			offset=0x00012FE6
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["rand3_set"]=addr
+			offset=0x00012F3C
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["time1"]=addr
+			offset=0x00012F4C
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["time2"]=addr
+			offset=0x0001317A
+			addr = module_base + offset
+			print "bp : %08X,%08X"% (addr,offset)
+			idc.AddBpt(addr)
+			self.bpList["strlen"]=addr
+
 	#获取模块基地址
 	def get_module_base(self,moduleName):
 		print "get_module_base: %s" % moduleName
